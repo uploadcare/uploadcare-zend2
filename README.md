@@ -52,7 +52,7 @@ It will return a UploadcareZend object. This class extends Uploadcare\Api class.
 
 Create a from to show Uploadcare widget. Use UploadcareInput class as a field:
 
-namespace Application\Form;
+    namespace Application\Form;
 
     use Zend\Form\Form;
     use Uploadcare\Form\UploadcareInput;
