@@ -4,5 +4,10 @@
     "homepage": "https://github.com/uploadcare/uploadcare-zend2",
     "require": {
         "php": ">=5.3.0"
-    }
+    },
+    "autoload": {
+        "classmap": [
+            "./Module.php"
+        ]
+    }    
 }
