@@ -11,9 +11,27 @@ It's based on a [uploadcare-php][4] library.
 
 ## Install
 
+### GitHub
+
 Clone module from git to your vendor directory:
 
     git clone git://github.com/uploadcare/uploadcare-zend2.git vendor/Uploadcare --recursive
+    
+### Composer
+
+Update your composer.json:
+
+    "require": {
+      "uploadcare/uploadcare-zend2": "dev-master"
+    }   
+
+Install package:
+
+    composer update
+    
+Fetch submodules from github:
+    
+    cd vendor/uploadcare/uploadcare-zend2/ && git submodule init && git submodule update   
     
 Edit your config/application.config.php and add new module. It should look like this:
     
