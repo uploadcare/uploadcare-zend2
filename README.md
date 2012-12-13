@@ -13,7 +13,7 @@ It's based on a [uploadcare-php][4] library.
 
 Clone module from git to your vendor directory:
 
-    git clone git://github.com/uploadcare/uploadcare-zend2.git vendor --recursive
+    git clone git://github.com/uploadcare/uploadcare-zend2.git vendor/Uploadcare --recursive
     
 Edit your config/application.config.php and add new module. It should look like this:
     
