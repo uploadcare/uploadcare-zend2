@@ -126,7 +126,7 @@ Let's handle file_id and display the file. Update your controller to look like t
         {
             $uploadcare = $this->getServiceLocator()->get('uploadcare');
   
-              $uploadcare_widget = new UploadcareInput('file_id');
+            $uploadcare_widget = new UploadcareInput('file_id');
             
             $form = new Form();
             $form->add($uploadcare_widget);
