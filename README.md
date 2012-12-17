@@ -120,13 +120,13 @@ Now you are able to upload files using Uploadcare widget.
 
 Let's handle file_id and display the file. Update your controller to look like this:
 
-  class IndexController extends AbstractActionController
-  {
-      public function indexAction()
-      {
-          $uploadcare = $this->getServiceLocator()->get('uploadcare');
-
-            $uploadcare_widget = new UploadcareInput('file_id');
+    class IndexController extends AbstractActionController
+    {
+        public function indexAction()
+        {
+            $uploadcare = $this->getServiceLocator()->get('uploadcare');
+  
+              $uploadcare_widget = new UploadcareInput('file_id');
             
             $form = new Form();
             $form->add($uploadcare_widget);
@@ -136,25 +136,25 @@ Let's handle file_id and display the file. Update your controller to look like t
                 'value' => 'Upload!'
             )));
         
-          $file = null;
-          $request = $this->getRequest();
-          if ($request->isPost()) {
-            $form->setData($request->getPost()->toArray());
-            if ($form->isValid()) {
-              $data = $form->getData();
-              $file_id = $data['file_id'];
-              $file = $uploadcare->getFile($file_id); //get file from API
-              $file->store(); //store file
+            $file = null;
+            $request = $this->getRequest();
+            if ($request->isPost()) {
+              $form->setData($request->getPost()->toArray());
+              if ($form->isValid()) {
+                $data = $form->getData();
+                $file_id = $data['file_id'];
+                $file = $uploadcare->getFile($file_id); //get file from API
+                $file->store(); //store file
+              }
             }
-          }
-          
-          return array(
-            'form' => $form,
-            'uploadcare' => $uploadcare,
-            'file' => $file,
-          );
-      }
-  }
+            
+            return array(
+              'form' => $form,
+              'uploadcare' => $uploadcare,
+              'file' => $file,
+            );
+        }
+    }
 
 Now we have an object of Uploadcare\File. Let's display it inside view:
 
