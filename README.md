@@ -68,45 +68,33 @@ You can access uploadcare api service inside a controller like this:
     
 It will return a UploadcareZend object. This class extends Uploadcare\Api class.
 
-Create a from to show Uploadcare widget. Use UploadcareInput class as a field:
+Create a from to show Uploadcare widget. Use UploadcareInput class as a field.
 
-    namespace Application\Form;
+Inside your controller:
 
-    use Zend\Form\Form;
-    use Uploadcare\Form\UploadcareInput;
-    
-    class FileForm extends Form
-    {
-      public function __construct($name = null)
-      {
-        parent::__construct('File');
-    
-        $this->add(new UploadcareInput('file_id'));
-        
-        $this->add(array(
-            'name' => 'submit',
-            'attributes' => array(
-                'type'  => 'submit',
-                'value' => 'Upload!'
-            ),
-        ));   
-      } 
-    }
- 
- Update your controller:
- 
     namespace Application\Controller;
     
     use Zend\Mvc\Controller\AbstractActionController;
-    use Zend\View\Model\ViewModel;
-    use Application\Form\FileForm; 
- 
+    use Uploadcare\Form\UploadcareInput;
+    use Zend\Form\Form;
+
     class IndexController extends AbstractActionController
     {
         public function indexAction()
         {
             $uploadcare = $this->getServiceLocator()->get('uploadcare');
-            $form = new FileForm();
+            
+            //file_id is name of input for widget. 
+            //You will recieve File ID at CDN from this field.
+            $uploadcare_widget = new UploadcareInput('file_id');
+            
+            $form = new Form();
+            $form->add($uploadcare_widget);
+            $form->add(array('name' => 'submit',
+              'attributes' => array(
+                'type'  => 'submit',
+                'value' => 'Upload!'
+            )));
             
             return array(
               'form' => $form,
@@ -132,32 +120,41 @@ Now you are able to upload files using Uploadcare widget.
 
 Let's handle file_id and display the file. Update your controller to look like this:
 
-class IndexController extends AbstractActionController
-{
-    public function indexAction()
-    {
-        $uploadcare = $this->getServiceLocator()->get('uploadcare');
-        $form = new FileForm();
+  class IndexController extends AbstractActionController
+  {
+      public function indexAction()
+      {
+          $uploadcare = $this->getServiceLocator()->get('uploadcare');
+
+            $uploadcare_widget = new UploadcareInput('file_id');
+            
+            $form = new Form();
+            $form->add($uploadcare_widget);
+            $form->add(array('name' => 'submit',
+              'attributes' => array(
+                'type'  => 'submit',
+                'value' => 'Upload!'
+            )));
         
-        $file = null;
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-          $form->setData($request->getPost()->toArray());
-          if ($form->isValid()) {
-            $data = $form->getData();
-            $file_id = $data['file_id'];
-            $file = $uploadcare->getFile($file_id); //get file from API
-            $file->store(); //store file
+          $file = null;
+          $request = $this->getRequest();
+          if ($request->isPost()) {
+            $form->setData($request->getPost()->toArray());
+            if ($form->isValid()) {
+              $data = $form->getData();
+              $file_id = $data['file_id'];
+              $file = $uploadcare->getFile($file_id); //get file from API
+              $file->store(); //store file
+            }
           }
-        }
-        
-        return array(
-          'form' => $form,
-          'uploadcare' => $uploadcare,
-          'file' => $file,
-        );
-    }
-}
+          
+          return array(
+            'form' => $form,
+            'uploadcare' => $uploadcare,
+            'file' => $file,
+          );
+      }
+  }
 
 Now we have an object of Uploadcare\File. Let's display it inside view:
 
