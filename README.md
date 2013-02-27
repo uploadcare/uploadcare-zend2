@@ -8,6 +8,7 @@ It's based on a [uploadcare-php][4] library.
 
 - Zend 2.0+
 - PHP 5.3+
+- php-curl
 
 ## Install
 
